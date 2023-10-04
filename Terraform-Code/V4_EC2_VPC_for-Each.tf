@@ -7,8 +7,12 @@ resource "aws_instance" "TeamProject-instance" {
   instance_type = "t2.micro"
   key_name      = "Project_one_key"
   subnet_id     = aws_subnet.public-subnet-01.id
-
   vpc_security_group_ids = [aws_security_group.ssh-sg.id]
+
+  for_each = toset(["jenkins-master", "build-slave", "ansible"])
+   tags = {
+     Name = "${each.key}"
+   }
 }
 
 resource "aws_security_group" "ssh-sg" {
