@@ -8,12 +8,9 @@ resource "aws_instance" "TeamProject-instance" {
   key_name      = "Project_one_key"
   security_groups = ["ssh-sg"]
 }
-
 resource "aws_security_group" "ssh-sg" {
     name = "SSHSG"
-    description = "ssh accuss"
-    vpc_id = aws_vpc.tp-vpc.id 
-  
+    description = "ssh access"
 
   ingress {
     description      = "ssh access"

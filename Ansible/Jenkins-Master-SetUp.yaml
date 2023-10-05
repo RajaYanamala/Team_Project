@@ -1,0 +1,30 @@
+---
+- name: To Install Java And Jenkins And Start Jenkins
+  hosts: tag_Name_Jenkins-Master
+  become: yes
+  tasks:
+    - name: Install Java 11 version
+      yum:
+        name: java-11-amazon-corretto
+        state: present
+
+    - name: Download Jenkins Repository Configuration
+      get_url:
+        url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
+        dest: /etc/yum.repos.d/jenkins.repo
+
+    - name: Add Jenkins Repository Key
+      rpm_key:
+        state: present
+        key: https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+
+    - name: Install Jenkins
+      yum:
+        name: jenkins
+        state: present
+
+    - name: Start and Enable Jenkins
+      service:
+        name: jenkins
+        enabled: yes
+        state: started

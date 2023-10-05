@@ -3,13 +3,13 @@ provider "aws" {
 }
 
 resource "aws_instance" "TeamProject-instance" {
-  ami           = "ami-05552d2dcf89c9b24"
+  ami           = "ami-03d294e37a4820c21"
   instance_type = "t2.micro"
   key_name      = "Project_one_key"
   subnet_id     = aws_subnet.public-subnet-01.id
   vpc_security_group_ids = [aws_security_group.ssh-sg.id]
 
-  for_each = toset(["jenkins-master", "build-slave", "ansible"])
+  for_each = toset(["Jenkins-Master", "Jenkins-Slave", "Ansible"])
    tags = {
      Name = "${each.key}"
    }
@@ -17,7 +17,7 @@ resource "aws_instance" "TeamProject-instance" {
 
 resource "aws_security_group" "ssh-sg" {
     name = "SSHSG"
-    description = "ssh accuss"
+    description = "ssh access"
     vpc_id = aws_vpc.tp-vpc.id 
   
 
@@ -25,6 +25,15 @@ resource "aws_security_group" "ssh-sg" {
     description      = "ssh access"
     from_port        = 22
     to_port          = 22
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    
+  }
+
+   ingress {
+    description      = "jenkins access"
+    from_port        = 8080
+    to_port          = 8080
     protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
     

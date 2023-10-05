@@ -1,0 +1,14 @@
+---
+- name: Install Jave 11 Version And Maven 
+  hosts: tag_Name_Jenkins-Slave
+  become: yes
+  tasks:
+    - name: Install Java 11 Version
+      yum: 
+        name: java-11-amazon-corretto
+        state: present
+
+    - name: Install Maven
+      yum:
+        name: maven
+        state: present
