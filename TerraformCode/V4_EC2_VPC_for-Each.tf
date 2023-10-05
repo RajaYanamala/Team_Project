@@ -9,7 +9,7 @@ resource "aws_instance" "TeamProject-instance" {
   subnet_id     = aws_subnet.public-subnet-01.id
   vpc_security_group_ids = [aws_security_group.ssh-sg.id]
 
-  for_each = toset(["jenkins-master", "build-slave", "ansible"])
+  for_each = toset(["jenkins-master", "jenkins-slave", "ansible"])
    tags = {
      Name = "${each.key}"
    }
