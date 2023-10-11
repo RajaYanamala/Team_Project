@@ -12,3 +12,30 @@
       yum:
         name: maven
         state: present
+
+    - name: Install Git 
+      yum: 
+        name: git
+        state: present
+
+    - name: Install Docker
+      yum:
+        name: docker
+        state: present
+
+    - name: Start Docker Service
+      service:
+        name: docker
+        state: started
+
+    - name: Enable Docker Service 
+      service:
+        name: docker
+        enable: yes
+
+    - name: Give Permissions To Docker.sock file
+      file:
+        path: /var/run/docker.sock
+        state: file
+        mode: 0777
+        
